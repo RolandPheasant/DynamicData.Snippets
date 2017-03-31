@@ -1,3 +1,4 @@
 # DynamicData.Snippets
 
-A project to add how to examples for Dynamic Data
+This project contains "How To" examples for Dynamic Data.
+
