@@ -71,6 +71,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Group\GroupAndMonitorPropertyChanges.cs" />
     <Compile Include="ViewModelTesting\Domain.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

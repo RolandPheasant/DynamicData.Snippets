@@ -28,7 +28,7 @@ namespace DynamicData.Snippets.ViewModelTesting
                 .Connect()
                 .Transform(CreateItemViewModel)             
                 .BatchIf(paused,  schedulerProvider.Background) 
-                .Sort(SortExpressionComparer<ItemViewModel>.Descending(i => i.Item.Id), resetThreshold: 20)
+                .Sort(SortExpressionComparer<ItemViewModel>.Descending(i => i.Item.Id))
                 .ObserveOn(schedulerProvider.MainThread)
                 .Bind(out var bindingData)
                 .Subscribe();

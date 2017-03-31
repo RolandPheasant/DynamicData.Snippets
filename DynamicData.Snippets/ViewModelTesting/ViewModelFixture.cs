@@ -43,7 +43,7 @@ namespace DynamicData.Snippets.ViewModelTesting
                 sut.IsPaused = true;
                 schedulerProvider.TestScheduler.Start(); //push scheduler forward
 
-                //data after pause has started
+                //add data after pause has started
                 testData.Data.AddOrUpdate(Enumerable.Range(1, 10).Select(i => new Item(i)));
                 schedulerProvider.TestScheduler.AdvanceBy(1);
 
