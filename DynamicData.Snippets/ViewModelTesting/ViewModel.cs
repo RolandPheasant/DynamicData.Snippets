@@ -27,7 +27,7 @@ namespace DynamicData.Snippets.ViewModelTesting
               var dataLoader = dataProvider.ItemCache
                 .Connect()
                 .Transform(CreateItemViewModel)             
-                .BatchIf(paused,  schedulerProvider.Background) 
+                .BatchIf(paused,  schedulerProvider.Background) //pause the observable for fun + to illustrate background testing
                 .Sort(SortExpressionComparer<ItemViewModel>.Descending(i => i.Item.Id))
                 .ObserveOn(schedulerProvider.MainThread)
                 .Bind(out var bindingData)

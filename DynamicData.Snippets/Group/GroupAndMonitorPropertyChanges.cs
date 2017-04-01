@@ -20,7 +20,7 @@ namespace DynamicData.Snippets.Group
             //fired when the name changes on any item in the source collection
             var nameChanged = shared.WhenValueChanged(species => species.Name);
 
-            //group by first letter and pass in the nameChanged observable (as a unit) to instruct the grouping to re-apply the grouping
+            //group by first letter and optionally pass in the nameChanged observable (as a unit) to instruct the grouping to re-apply the grouping
             SpeciesByLetter =  shared
                 .GroupWithImmutableState(x => x.Name[0], nameChanged.Select(_=> Unit.Default))
                 .Transform(grouping => new SpeciesGroup(grouping.Key, grouping.Items))
