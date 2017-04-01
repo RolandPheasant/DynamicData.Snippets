@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Group\GroupAndMonitorPropertyChanges.cs" />
+    <Compile Include="Group\GroupFixture.cs" />
     <Compile Include="ViewModelTesting\Domain.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

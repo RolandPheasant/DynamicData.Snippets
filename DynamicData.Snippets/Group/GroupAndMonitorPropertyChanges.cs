@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -6,23 +7,21 @@ using DynamicData.Binding;
 
 namespace DynamicData.Snippets.Group
 {
-
-    public class GroupAndMonitorPropertyChanges
+    public class GroupAndMonitorPropertyChanges: IDisposable
     {
+        public IObservableList<SpeciesGroup> SpeciesByLetter { get; }
 
-        public GroupAndMonitorPropertyChanges()
+        private readonly IDisposable _cleanUp;
+
+        public GroupAndMonitorPropertyChanges(ISourceList<Species> sourceList)
         {
-            var sourceList  = new SourceList<Species>();
-            sourceList.AddRange(new[] {new Species("Ant"),new Species("Ape"),new Species("Bear"),new Species("Boar"),new Species("Cougar")});
-            
-            //share so we are not duplicating change sets
             var shared = sourceList.Connect().Publish();
 
             //fired when the name changes on any item in the source collection
             var nameChanged = shared.WhenValueChanged(species => species.Name);
 
             //group by first letter and pass in the nameChanged observable (as a unit) to instruct the grouping to re-apply the grouping
-            var derivedGroupedList = shared
+            SpeciesByLetter =  shared
                 .GroupWithImmutableState(x => x.Name[0], nameChanged.Select(_=> Unit.Default))
                 .Transform(grouping => new SpeciesGroup(grouping.Key, grouping.Items))
                 .AsObservableList();
@@ -32,37 +31,41 @@ namespace DynamicData.Snippets.Group
              //Nothing happens until a Published source is connect
              var connected = shared.Connect();
 
-            var disposeAllThisStuff = new CompositeDisposable(sourceList, derivedGroupedList, connected);
+            _cleanUp = new CompositeDisposable(sourceList, SpeciesByLetter, connected);
         }
 
-        private class SpeciesGroup
+        public void Dispose()
         {
-            public SpeciesGroup(char key, IEnumerable<Species> items)
-            {
-                this.Key = key;
-                this.Items = items;
-            }
-
-            public IEnumerable<Species> Items { get; }
-
-            public char Key { get; }
-        }
-
-        private class Species : AbstractNotifyPropertyChanged
-        {
-            public Species(string name)
-            {
-                Name = name;
-            }
-
-            private string _name;
-            public string Name
-            {
-                get { return _name; }
-                set { SetAndRaise(ref _name, value); }
-            }
+            _cleanUp.Dispose();
         }
     }
 
+    public class SpeciesGroup
+    {
+        public SpeciesGroup(char key, IEnumerable<Species> items)
+        {
+            this.Key = key;
+            this.Items = items;
+        }
+
+        public IEnumerable<Species> Items { get; }
+
+        public char Key { get; }
+    }
+
+    public class Species : AbstractNotifyPropertyChanged
+    {
+        public Species(string name)
+        {
+            Name = name;
+        }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { SetAndRaise(ref _name, value); }
+        }
+    }
 
 }
