@@ -12,7 +12,7 @@ namespace DynamicData.Snippets.ViewModelTesting
         [Test]
         public void Binding()
         {
-           var schedulerProvider = new TestSchedulerProvider();
+            var schedulerProvider = new TestSchedulerProvider();
             using (var testData = new DataProviderStub())
             using (var sut = new ViewModel(testData, schedulerProvider))
             {
@@ -26,9 +26,9 @@ namespace DynamicData.Snippets.ViewModelTesting
 
                 //2. Check Transform and Sort
                 var expectedData = items
-                            .Select(i => new ItemViewModel(i))
-                            .OrderByDescending(vm => vm.Item.Id);
-                                        
+                    .Select(i => new ItemViewModel(i))
+                    .OrderByDescending(vm => vm.Item.Id);
+
                 sut.BindingData.ShouldAllBeEquivalentTo(expectedData);
             }
         }
