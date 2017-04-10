@@ -13,10 +13,10 @@ namespace DynamicData.Snippets.Group
         public void GroupAndMonitorPropertyChanges()
         {
             //create manual grouping so we can guage expectations
-            Func<ISourceList<Species>, IEnumerable<SpeciesGroup>> manualGrouping = items =>
+            IEnumerable<SpeciesGroup> ManualGrouping(ISourceList<Species> items)
             {
                 return items.Items.GroupBy(i => i.Name[0]).Select(g => new SpeciesGroup(g.Key, g.ToArray()));
-            };
+            }
 
             using (var sourceList = new SourceList<Species>())
             using (var grouper = new GroupAndMonitorPropertyChanges(sourceList))
@@ -27,7 +27,7 @@ namespace DynamicData.Snippets.Group
                 
                 //Check all data has loaded
                 grouper.SpeciesByLetter.Items.SelectMany(g => g.Items).ShouldAllBeEquivalentTo(initialData);
-                grouper.SpeciesByLetter.Items.ShouldBeEquivalentTo(manualGrouping(sourceList));
+                grouper.SpeciesByLetter.Items.ShouldBeEquivalentTo(ManualGrouping(sourceList));
                 grouper.SpeciesByLetter.Count.Should().Be(3);
 
                 //change the first letter of the data and the groupings will change
@@ -35,7 +35,7 @@ namespace DynamicData.Snippets.Group
                 grouper.SpeciesByLetter.Count.Should().Be(4);
 
                 //assert everything
-                grouper.SpeciesByLetter.Items.ShouldBeEquivalentTo(manualGrouping(sourceList));
+                grouper.SpeciesByLetter.Items.ShouldBeEquivalentTo(ManualGrouping(sourceList));
             }
         }
     }

@@ -63,8 +63,8 @@ namespace DynamicData.Snippets.Group
         private string _name;
         public string Name
         {
-            get { return _name; }
-            set { SetAndRaise(ref _name, value); }
+            get => _name;
+            set => SetAndRaise(ref _name, value);
         }
     }
 

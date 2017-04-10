@@ -6,6 +6,8 @@ namespace DynamicData.Snippets.Join
     {
         public JoinBasedOnListOfIds(IObservableCache<User, int> users, IObservableCache<Role, int> roles)
         {
+            //TODO: Add overload to join many which enables joining on an array
+
             //users.Connect().JoinMany(roles.Connect(),
             //        // select some sort of list with ids 
             //        user => user.Roles,
