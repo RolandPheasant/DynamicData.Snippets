@@ -75,9 +75,11 @@
     <Compile Include="Group\GroupFixture.cs" />
     <Compile Include="Infrastructure\ObservableEx.cs" />
     <Compile Include="Infrastructure\SchedulerProvider.cs" />
+    <Compile Include="Infrastructure\SimpleObjectWithObservable.cs" />
     <Compile Include="Infrastructure\TestSchedulerProvider.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
     <Compile Include="InspectItems\InspectCollection.cs" />
+    <Compile Include="InspectItems\InspectCollectionWithObservable.cs" />
     <Compile Include="InspectItems\InspectCollectionWithPropertyChanges.cs" />
     <Compile Include="InspectItems\InspectItemsFixture.cs" />
     <Compile Include="Infrastructure\SimpleImmutableObject.cs" />
