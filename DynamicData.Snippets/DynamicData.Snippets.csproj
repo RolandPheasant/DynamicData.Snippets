@@ -84,6 +84,7 @@
     <Compile Include="InspectItems\InspectItemsFixture.cs" />
     <Compile Include="Infrastructure\SimpleImmutableObject.cs" />
     <Compile Include="Infrastructure\SimpleNotifyPropertyChangedObject.cs" />
+    <Compile Include="InspectItems\MonitorSelectedItems.cs" />
     <Compile Include="Join\JoinBasedOnListOfIds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelTesting\ViewModel.cs" />

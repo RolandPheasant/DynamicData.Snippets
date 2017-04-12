@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using DynamicData.Binding;
 using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.InspectItems

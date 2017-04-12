@@ -76,7 +76,6 @@ namespace DynamicData.Snippets.InspectItems
                 .ToArray();
             
             //result should only be true when all items are set to true
-
             using (var sourceList = new SourceList<SimpleObjectWithObservable>())
             using (var sut = new InspectCollectionWithObservable(sourceList))
             {
@@ -97,6 +96,37 @@ namespace DynamicData.Snippets.InspectItems
 
                 sourceList.Clear();
                 sut.AllActive.Should().Be(false);
+            }
+        }
+
+        [TestCase(MonitorSelectedItemsMode.UsingEntireCollection)]
+        [TestCase(MonitorSelectedItemsMode.UsingFilterOnProperty)]
+        public void MonitorSelectedItems(MonitorSelectedItemsMode mode)
+        {
+            var initialItems = Enumerable.Range(1, 10)
+                .Select(i => new SelectableItem(i))
+                .ToArray();
+
+            //result should only be true when all items are set to true
+            using (var sourceList = new SourceList<SelectableItem>())
+            using (var sut = new MonitorSelectedItems(sourceList, mode))
+            {
+                sourceList.AddRange(initialItems);
+                sut.HasSelection.Should().Be(false);
+                sut.SelectedMessage.Should().Be("Nothing Selected");
+
+                initialItems[0].IsSelected = true;
+                sut.HasSelection.Should().Be(true);
+                sut.SelectedMessage.Should().Be("1 item selected");
+
+                initialItems[1].IsSelected = true;
+                sut.HasSelection.Should().Be(true);
+                sut.SelectedMessage.Should().Be("2 items selected");
+
+                //remove the selected items
+                sourceList.RemoveRange(0,2);
+                sut.HasSelection.Should().Be(false);
+                sut.SelectedMessage.Should().Be("Nothing Selected");
             }
         }
     }
