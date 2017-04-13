@@ -33,8 +33,8 @@ namespace DynamicData.Snippets.InspectItems
         {
             //produce an observable when the underlying list changes, or when IsSelected changes
             var shared = _source.Connect().Publish();
-            var activeChanged = shared.WhenPropertyChanged(si => si.IsSelected).ToUnit().StartWith(Unit.Default);
-            var collectionChanged = shared.ToCollection().CombineLatest(activeChanged, (items, _) => items).Publish();
+            var selectedChanged = shared.WhenPropertyChanged(si => si.IsSelected).ToUnit().StartWith(Unit.Default);
+            var collectionChanged = shared.ToCollection().CombineLatest(selectedChanged, (items, _) => items).Publish();
 
             return new CompositeDisposable
                 (

@@ -42,14 +42,14 @@ namespace DynamicData.Snippets.ViewModelTesting
 
         public bool ShowEmptyView
         {
-            get { return _showEmptyView; }
-            set { SetAndRaise(ref _showEmptyView, value); }
+            get => _showEmptyView;
+            set => SetAndRaise(ref _showEmptyView, value);
         }
 
         public bool IsPaused
         {
-            get { return _isPaused; }
-            set { SetAndRaise(ref _isPaused, value);}
+            get => _isPaused;
+            set => SetAndRaise(ref _isPaused, value);
         }
 
         private ItemViewModel CreateItemViewModel(Item item)
