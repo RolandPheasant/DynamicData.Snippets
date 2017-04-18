@@ -71,10 +71,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filter\ExternalSourceFilter.cs" />
+    <Compile Include="Filter\FilterFixture.cs" />
+    <Compile Include="Filter\DynamicFilter.cs" />
+    <Compile Include="Filter\PropertyFilter.cs" />
+    <Compile Include="Filter\StaticFilter.cs" />
     <Compile Include="Group\GroupAndMonitorPropertyChanges.cs" />
     <Compile Include="Group\GroupFixture.cs" />
+    <Compile Include="Infrastructure\Animal.cs" />
     <Compile Include="Infrastructure\ObservableEx.cs" />
     <Compile Include="Infrastructure\SchedulerProvider.cs" />
+    <Compile Include="Infrastructure\StringEx.cs" />
     <Compile Include="Infrastructure\TestSchedulerProvider.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
     <Compile Include="InspectItems\InspectCollection.cs" />
@@ -91,8 +98,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filter\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
