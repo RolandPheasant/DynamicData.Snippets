@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using DynamicData.Binding;
 using DynamicData.Snippets.Infrastructure;
 
@@ -55,6 +56,25 @@ namespace DynamicData.Snippets.InspectItems
         public void Dispose()
         {
             _cleanUp.Dispose();
+        }
+    }
+
+    public class SimpleObjectWithObservable
+    {
+        public int Id { get; }
+
+        private readonly ISubject<bool> _isActiveSubject = new Subject<bool>();
+
+        public SimpleObjectWithObservable(int id)
+        {
+            Id = id;
+        }
+
+        public IObservable<bool> IsActive => _isActiveSubject;
+
+        public void SetIsActive(bool isActive)
+        {
+            _isActiveSubject.OnNext(isActive);
         }
     }
 }

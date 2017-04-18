@@ -15,7 +15,7 @@ The dynamic data chat room is a sub channel the Reactive Inc slack channel. It i
   
 ### Real world examples of Dynamic Data
 
-I have created several Dynamic Data in action projects which illustrates the usage of dynamic data. I encourage people who want to see real world examples of Dynamic Data to take a look at the following projects to see the capabilities of Dynamic Data.
+I have created several Dynamic Data in action projects which illustrates the usage of dynamic data. I encourage people who want to see these real world examples to take a look at the following projects to see the capabilities of Dynamic Data.
 
 Include are:
 

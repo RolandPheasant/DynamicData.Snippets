@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using DynamicData.Binding;
 using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.InspectItems
@@ -58,6 +59,24 @@ namespace DynamicData.Snippets.InspectItems
         public void Dispose()
         {
             _cleanUp.Dispose();
+        }
+    }
+
+    public class SimpleNotifyPropertyChangedObject : AbstractNotifyPropertyChanged
+    {
+        public int Id { get; }
+
+        public SimpleNotifyPropertyChangedObject(int id)
+        {
+            Id = id;
+        }
+
+        private bool _isActive;
+
+        public bool IsActive
+        {
+            get => _isActive;
+            set => SetAndRaise(ref _isActive, value);
         }
     }
 }
