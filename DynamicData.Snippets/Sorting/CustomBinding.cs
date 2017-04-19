@@ -21,7 +21,9 @@ namespace DynamicData.Snippets.Sorting
                  Sometimes the default binding does not behave exact as you want.
                  Using VariableThresholdObservableCollectionAdaptor is an example of how you can inject your own behaviour.
             */
-            
+
+            Threshold = 5;
+
             _cleanUp = source.Connect()
                 .Sort(SortExpressionComparer<Animal>.Ascending(a => a.Name))
                 .Bind(out var data, adaptor: new VariableThresholdObservableCollectionAdaptor<Animal, string>(() => Threshold))
@@ -64,6 +66,23 @@ namespace DynamicData.Snippets.Sorting
             switch (changes.SortedItems.SortReason)
             {
                 case SortReason.InitialLoad:
+                {
+                    if (changes.Count > _refreshThreshold())
+                    {
+                        using (collection.SuspendNotifications())
+                        {
+                            collection.Load(changes.SortedItems.Select(kv => kv.Value));
+                        }
+                    }
+                    else
+                    {
+                        using (collection.SuspendCount())
+                        {
+                            DoUpdate(changes, collection);
+                        }
+                    }
+                    }
+                    break;
                 case SortReason.ComparerChanged:
                 case SortReason.Reset:
                     using (collection.SuspendNotifications())

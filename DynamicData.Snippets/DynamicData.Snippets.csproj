@@ -92,6 +92,7 @@
     <Compile Include="Join\JoinBasedOnListOfIds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sorting\CustomBinding.cs" />
+    <Compile Include="Sorting\SortFixture.cs" />
     <Compile Include="ViewModelTesting\ViewModel.cs" />
     <Compile Include="ViewModelTesting\ViewModelFixture.cs" />
   </ItemGroup>
