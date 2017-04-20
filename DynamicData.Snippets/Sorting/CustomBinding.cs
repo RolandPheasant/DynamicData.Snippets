@@ -18,7 +18,7 @@ namespace DynamicData.Snippets.Sorting
         public CustomBinding(IObservableCache<Animal, string> source)
         {
             /*
-                 Sometimes the default binding does not behave exact as you want.
+                 Sometimes the default binding does not behave exactly as you want.
                  Using VariableThresholdObservableCollectionAdaptor is an example of how you can inject your own behaviour.
             */
 

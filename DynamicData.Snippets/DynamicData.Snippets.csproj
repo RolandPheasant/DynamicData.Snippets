@@ -91,6 +91,7 @@
     <Compile Include="InspectItems\MonitorSelectedItems.cs" />
     <Compile Include="Join\JoinBasedOnListOfIds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sorting\ChangeComparer.cs" />
     <Compile Include="Sorting\CustomBinding.cs" />
     <Compile Include="Sorting\SortFixture.cs" />
     <Compile Include="Switch\SwitchDataSource.cs" />

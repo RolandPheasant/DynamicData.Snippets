@@ -1,6 +1,9 @@
 ﻿
+using System;
 using System.Collections.Specialized;
+using System.Linq;
 using DynamicData.Snippets.Infrastructure;
+using DynamicData.Snippets.Switch;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -50,10 +53,32 @@ namespace DynamicData.Snippets.Sorting
                 sut.Threshold = 20;
                 sourceCache.AddOrUpdate(_items);
                 resetCount.Should().Be(1);
-
-
             }
 
         }
+
+        [Test]
+        public void ChangeComparer()
+        {
+            const int size = 1000;
+            var randomValues = Enumerable.Range(1, size).OrderBy(_ => Guid.NewGuid()).ToArray();
+            var ascending = Enumerable.Range(1, size).ToArray();
+            var descending = Enumerable.Range(1, size).OrderByDescending(_ => Guid.NewGuid()).ToArray();
+
+            using (var input = new SourceList<int>())
+            using (var sut = new ChangeComparer(input))
+            {
+                input.AddRange(randomValues);
+
+                sut.DataSource.Items.ShouldAllBeEquivalentTo(ascending);
+
+                sut.Option = ChangeComparereOption.Descending;
+                sut.DataSource.Items.ShouldAllBeEquivalentTo(descending);
+
+                sut.Option = ChangeComparereOption.Ascending;
+                sut.DataSource.Items.ShouldAllBeEquivalentTo(ascending);
+            }
+        }
+
     }
 }

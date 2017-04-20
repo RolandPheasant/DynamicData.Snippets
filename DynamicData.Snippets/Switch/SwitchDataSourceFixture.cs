@@ -20,8 +20,8 @@ namespace DynamicData.Snippets.Switch
             using (var listB = new SourceList<int>())
             using (var sut = new SwitchDataSource(listA, listB))
             {
-                var oddNumbers = Enumerable.Range(1, 1000).Where(i => i % 2 == 1).ToArray();
-                var evenNumbers = Enumerable.Range(1, 1000).Where(i => i % 2 == 2).ToArray();
+                var oddNumbers = Enumerable.Range(1, 10000).Where(i => i % 2 == 1).ToArray();
+                var evenNumbers = Enumerable.Range(1, 10000).Where(i => i % 2 == 2).ToArray();
 
                 listA.AddRange(oddNumbers);
                 listB.AddRange(evenNumbers);

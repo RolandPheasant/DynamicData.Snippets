@@ -27,7 +27,7 @@ namespace DynamicData.Snippets.Switch
 
             DataSource = this.WhenValueChanged(@this => @this.Option)
                 .Select(opt => opt == SwitchDataSourceOption.SourceA ? sourceA : sourceB)
-                .Switch()
+                .Switch() //this is dynamic data overload of Switch()
                 .AsObservableList();
 
             _cleanUp = DataSource;
