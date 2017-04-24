@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,22 +9,22 @@ using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.Group
 {
-    public sealed class XamarinGrouping: AbstractNotifyPropertyChanged, IDisposable
+    public sealed class XamarinFormsGrouping: AbstractNotifyPropertyChanged, IDisposable
     {
         private readonly IDisposable _cleanUp;
 
         public ReadOnlyObservableCollection<AnimalGroup> FamilyGroups { get; }
         
-        public XamarinGrouping(IObservableList<Animal> source, ISchedulerProvider schedulerProvider)
+        public XamarinFormsGrouping(IObservableList<Animal> source, ISchedulerProvider schedulerProvider)
         {
             /* Xamarin forms is a bit dumb and cannot handle nested observable collections. 
-             * To cirumvent group this limitation, create a specialist observable collection with headers and use dynamic data to manage it */
+             * To cirumvent this limitation, create a specialist observable collection with headers and use dynamic data to manage it */
 
             //create an observable predicate
-            var searchObservable = this.WhenValueChanged(@this => @this.Filter).ObserveOn(schedulerProvider.Background);
+            var observablePredicate = this.WhenValueChanged(@this => @this.Filter).ObserveOn(schedulerProvider.Background);
 
             _cleanUp = source.Connect()
-                .Filter(searchObservable)   //Apply filter dynamically
+                .Filter(observablePredicate)   //Apply filter dynamically
                 .GroupOn(arg => arg.Family)                                             //create a dynamic group
                 .Transform(grouping => new AnimalGroup(grouping, schedulerProvider))    //transform into a specialised observable collection
                 .Sort(SortExpressionComparer<AnimalGroup>.Ascending(a => a.Family))
@@ -62,7 +62,7 @@ namespace DynamicData.Snippets.Group
 
             //load and sort the grouped list
             var dataLoader = grouping.List.Connect()
-                .Sort(SortExpressionComparer<Animal>.Ascending(a=>a.Name))
+                .Sort(SortExpressionComparer<Animal>.Ascending(a => a.Name).ThenByAscending(a => a.Type))
                 .ObserveOn(schedulerProvider.MainThread)
                 .Bind(this, 2000) //make the reset threshold large because xamarin is slow when reset is called (or at least I think it is @erlend, please enlighten me )
                 .Subscribe();
@@ -75,7 +75,7 @@ namespace DynamicData.Snippets.Group
 
             _cleanUp = new CompositeDisposable(dataLoader, headerSetter);
         }
-        
+
         string _header;
         public string Header
         {
