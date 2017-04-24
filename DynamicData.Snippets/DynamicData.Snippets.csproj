@@ -78,6 +78,7 @@
     <Compile Include="Filter\StaticFilter.cs" />
     <Compile Include="Group\GroupAndMonitorPropertyChanges.cs" />
     <Compile Include="Group\GroupFixture.cs" />
+    <Compile Include="Group\XamarinGrouping.cs" />
     <Compile Include="Infrastructure\Animal.cs" />
     <Compile Include="Infrastructure\ObservableEx.cs" />
     <Compile Include="Infrastructure\SchedulerProvider.cs" />

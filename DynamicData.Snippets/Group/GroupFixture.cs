@@ -1,6 +1,7 @@
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
+using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -38,5 +39,51 @@ namespace DynamicData.Snippets.Group
                 grouper.SpeciesByLetter.Items.ShouldBeEquivalentTo(ManualGrouping(sourceList));
             }
         }
+
+        [Test]
+        public void XamarinGrouping()
+        {
+            var items = new[]
+            {
+                new Animal("Holly", "Cat", AnimalFamily.Mammal),
+                new Animal("Rover", "Dog", AnimalFamily.Mammal),
+                new Animal("Rex", "Dog", AnimalFamily.Mammal),
+                new Animal("Whiskers", "Cat", AnimalFamily.Mammal),
+                new Animal("Nemo", "Fish", AnimalFamily.Fish),
+                new Animal("Moby Dick", "Whale", AnimalFamily.Mammal),
+                new Animal("Fred", "Frog", AnimalFamily.Amphibian),
+                new Animal("Isaac", "Next", AnimalFamily.Amphibian),
+                new Animal("Sam", "Snake", AnimalFamily.Reptile),
+                new Animal("Sharon", "Red Backed Shrike", AnimalFamily.Bird),
+            };
+
+            var schedulerProvider = new TestSchedulerProvider();
+
+            using (var sourceList = new SourceList<Animal>())
+            using (var grouper = new XamarinGrouping(sourceList, schedulerProvider))
+            {
+                //populate with initial data
+                sourceList.AddRange(items);
+                schedulerProvider.TestScheduler.Start();
+
+                grouper.FamilyGroups.Count.Should().Be(5);
+                grouper.FamilyGroups.Single(group => group.Family == AnimalFamily.Mammal).Count.Should().Be(5);
+                grouper.FamilyGroups.Single(group => group.Family == AnimalFamily.Fish).Count.Should().Be(1);
+
+                //apply a filter
+                grouper.Filter = a => a.Type == "Dog" || a.Type == "Fish";
+
+                schedulerProvider.TestScheduler.Start();
+                grouper.FamilyGroups.Count.Should().Be(2);
+                grouper.FamilyGroups.Single(group => group.Family == AnimalFamily.Mammal).Count.Should().Be(2);
+                grouper.FamilyGroups.Single(group => group.Family == AnimalFamily.Fish).Count.Should().Be(1);
+
+                //clear list and all groupings are gone
+                sourceList.Clear();
+                schedulerProvider.TestScheduler.Start();
+                grouper.FamilyGroups.Count.Should().Be(0);
+            }
+        }
+
     }
 }

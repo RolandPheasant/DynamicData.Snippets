@@ -16,7 +16,7 @@ namespace DynamicData.Snippets.Join
             //        // join every list of every user with the right source and produce a list of matching values
             //        (user, roles) => new UserViewModel
             //        {
-            //            Name = user.Name,
+            //            GroupHeader = user.GroupHeader,
             //            Roles = roles
             //        });
 
