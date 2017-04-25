@@ -10,7 +10,7 @@ Thinking about it, why do people always ask for documents. We are developers and
  
 ### Support And Contact
 
-The dynamic data chat room is a sub channel the Reactive Inc slack channel. It is an invite only forum so if you want an invite send me a message on my [email](roland_pheasant@hotmail.com). If you would like me to produce an example to help with a particular problem, feel free to contact me on slack to discuss it further.
+The dynamic data chat room is a sub channel the Reactive Inc slack channel. It is an invite only forum so if you want an invite send me a message @ roland_pheasant@hotmail.com. If you would like me to produce an example to help with a particular problem, feel free to contact me on slack to discuss it further.
 
 ### Links to examples
 All these examples have working unit tests which allows for debugging and experimentation
