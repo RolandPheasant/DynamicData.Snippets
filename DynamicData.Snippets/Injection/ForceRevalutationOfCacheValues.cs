@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData.Aggregation;
 using DynamicData.Binding;
@@ -24,15 +25,19 @@ namespace DynamicData.Snippets.Injection
              * To force reevaluation, you need to manually trigger when to do so. In this case property changes are monitored
              * and the data source sends an evaluate signal to all downstream operators.
              */
-             
-            DistinctCount = dataSource.Connect()
+
+            var shared = dataSource.Connect().Publish();
+
+            DistinctCount = shared
                 .DistinctValues(m => m.Value)
-                .Do(x => { }, error => Console.WriteLine(error))
                 .Count();
 
-            _cleanUp = dataSource.Connect()
-                .WhenPropertyChanged(m => m.Value,false)
+            var reevaluator = shared
+                .WhenPropertyChanged(m => m.Value, false)
                 .Subscribe(_ => dataSource.Evaluate());
+
+            _cleanUp = new CompositeDisposable(reevaluator, shared.Connect());
+              
         }
 
         public ForceRevalutationOfCacheOperators(IObservable<IChangeSet<MutableThing, int>> dataSource)
