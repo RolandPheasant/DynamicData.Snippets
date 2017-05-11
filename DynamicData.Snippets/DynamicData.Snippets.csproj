@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicData, Version=5.2.1.2134, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.5.2.1.2134\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=5.3.0.2156, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.5.3.0.2156\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.dll</HintPath>
@@ -86,6 +86,9 @@
     <Compile Include="Infrastructure\StringEx.cs" />
     <Compile Include="Infrastructure\TestSchedulerProvider.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
+    <Compile Include="Infrastructure\DynamicDataEx.cs" />
+    <Compile Include="Injection\ForceRevalutationOfCacheValues.cs" />
+    <Compile Include="Injection\InjectionFixture.cs" />
     <Compile Include="InspectItems\InspectCollection.cs" />
     <Compile Include="InspectItems\InspectCollectionWithObservable.cs" />
     <Compile Include="InspectItems\InspectCollectionWithPropertyChanges.cs" />
