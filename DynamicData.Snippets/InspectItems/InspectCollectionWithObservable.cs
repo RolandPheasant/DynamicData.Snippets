@@ -4,7 +4,6 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using DynamicData.Binding;
 using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.InspectItems
@@ -31,7 +30,7 @@ namespace DynamicData.Snippets.InspectItems
             var collectionChanged = observableWithState.ToCollection();
 
             //combine latest collection and observable notifications and produce result indicating whether all items are Active
-            IObservable<bool> areAllActive = collectionChanged.CombineLatest(activeChanged, (items, _) =>
+            var areAllActive = collectionChanged.CombineLatest(activeChanged, (items, _) =>
             {
                 return items.Any() && items.All(state => state.LatestValue.HasValue && state.LatestValue == true);
             });

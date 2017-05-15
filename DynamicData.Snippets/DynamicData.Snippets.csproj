@@ -87,8 +87,8 @@
     <Compile Include="Infrastructure\TestSchedulerProvider.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
     <Compile Include="Infrastructure\DynamicDataEx.cs" />
-    <Compile Include="Injection\ForceRevalutationOfCacheValues.cs" />
-    <Compile Include="Injection\InjectionFixture.cs" />
+    <Compile Include="MutableValues\AutoRefreshForPropertyChanges.cs" />
+    <Compile Include="MutableValues\AutoRefreshFixture.cs" />
     <Compile Include="InspectItems\InspectCollection.cs" />
     <Compile Include="InspectItems\InspectCollectionWithObservable.cs" />
     <Compile Include="InspectItems\InspectCollectionWithPropertyChanges.cs" />
