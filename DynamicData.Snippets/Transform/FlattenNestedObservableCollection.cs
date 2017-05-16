@@ -14,7 +14,10 @@ namespace DynamicData.Snippets.Transform
         public FlattenNestedObservableCollection(IObservableCache<ClassWithNestedObservableCollection, int> source)
         {
             /*
-             * Create a flat cache based on a nested observable collection
+             * Create a flat cache based on a nested observable collection.
+             * 
+             * Since a new changeset is produced each time a parent is added, I recommend applying  Batch()
+             * after TransformMany() to reduce notifications (particularly on initial load) 
              */
             Children = source.Connect()
                         .TransformMany(parent => parent.Children.ToObservableChangeSet(c=>c.Name))
