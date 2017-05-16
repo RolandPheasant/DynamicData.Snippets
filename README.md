@@ -32,6 +32,7 @@ All these examples have working unit tests which allows for debugging and experi
 | Sorting|[ChangeComparer.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Sorting/ChangeComparer.cs) | How to dynamically sort a collection using an observable comparer|
 | |[CustomBinding.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Sorting/CustomBinding.cs) | Customise binding behaviour for a sorted data source|
 | Switch |[SwitchDataSource.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Switch/SwitchDataSource.cs) | Toggle between different data sources|
+| Transform |[FlattenNestedObservableCollection.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Transform/FlattenNestedObservableCollection.cs) | Flatten nested observable collections into an observable data source |
 | Testing|[ViewModel.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/ViewModelTesting/ViewModel.cs) | Illustrates how to test a view model when using dynamic data|
 
 ### Real world examples of Dynamic Data

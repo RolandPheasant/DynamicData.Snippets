@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -13,6 +12,111 @@ namespace DynamicData.Snippets.Infrastructure
 {
     public static class DynamicDataEx
     {
+        #region Transform Many Overloads
+
+        public static IObservable<IChangeSet<TDestination, TDestinationKey>> TransformMany<TDestination, TDestinationKey, TSource, TSourceKey>(this IObservable<IChangeSet<TSource, TSourceKey>> source,
+            Func<TSource, IObservable<IChangeSet<TDestination, TDestinationKey>>> manyselector)
+        {
+            var transformedSource = source
+                .Transform(manyselector)
+                .RemoveKey();
+
+            return new Merge<TDestination, TDestinationKey>(transformedSource).Run();
+        }
+
+        public static IObservable<IChangeSet<TDestination>> TransformMany<TDestination, TSource, TSourceKey>(this IObservable<IChangeSet<TSource, TSourceKey>> source,
+            Func<TSource, IObservable<IChangeSet<TDestination>>> manyselector)
+        {
+            var transformedSource = source
+                .Transform(manyselector)
+                .RemoveKey();
+
+            return new Merge<TDestination>(transformedSource).Run();
+        }
+        
+        private class Merge<TObject, TKey>
+        {
+            private readonly IObservable<IChangeSet<IObservable<IChangeSet<TObject, TKey>>>> _source;
+            private readonly object _locker = new object();
+            private int _refCount = 0;
+            private IObservableList<IObservable<IChangeSet<TObject, TKey>>> _list = null;
+
+            public Merge(IObservable<IChangeSet<IObservable<IChangeSet<TObject, TKey>>>> source)
+            {
+                _source = source;
+            }
+
+            public IObservable<IChangeSet<TObject, TKey>> Run()
+            {
+                return Observable.Create<IChangeSet<TObject, TKey>>(observer =>
+                {
+                    lock (_locker)
+                        if (++_refCount == 1)
+                            _list = _source.AsObservableList();
+
+                    var subscriber = _list.Or().SubscribeSafe(observer);
+
+                    return Disposable.Create(() =>
+                    {
+                        subscriber.Dispose();
+                        IDisposable listToDispose = null;
+                        lock (_locker)
+                            if (--_refCount == 0)
+                            {
+                                listToDispose = _list;
+                                _list = null;
+                            }
+
+                        listToDispose?.Dispose();
+                    });
+                });
+            }
+        }
+        
+        private class Merge<T>
+        {
+            private readonly IObservable<IChangeSet<IObservable<IChangeSet<T>>>> _source;
+            private readonly object _locker = new object();
+            private int _refCount = 0;
+            private IObservableList<IObservable<IChangeSet<T>>> _list = null;
+
+            public Merge(IObservable<IChangeSet<IObservable<IChangeSet<T>>>> source)
+            {
+                _source = source;
+            }
+
+            public IObservable<IChangeSet<T>> Run()
+            {
+                return Observable.Create<IChangeSet<T>>(observer =>
+                {
+                    lock (_locker)
+                        if (++_refCount == 1)
+                            _list = _source.AsObservableList();
+
+                    var subscriber = _list.Or().SubscribeSafe(observer);
+
+                    return Disposable.Create(() =>
+                    {
+                        subscriber.Dispose();
+                        IDisposable listToDispose = null;
+                        lock (_locker)
+                            if (--_refCount == 0)
+                            {
+                                listToDispose = _list;
+                                _list = null;
+                            }
+
+                        listToDispose?.Dispose();
+                    });
+                });
+            }
+        }
+
+
+        #endregion
+
+        #region Auto Refresh
+
         /// <summary>
         /// Automatically refresh downstream operators when properties change.
         /// </summary>
@@ -85,10 +189,16 @@ namespace DynamicData.Snippets.Infrastructure
         }
 
 
+        #endregion
+
+        public static IObservable<IChangeSet<TObject, TKey>> ExcludeSameReferenceUpdates<TObject, TKey>(this IObservable<IChangeSet<TObject, TKey>> source)
+        {
+            return source.IgnoreUpdateWhen((current, previous) => !ReferenceEquals(current, previous));
+        }
+        
         public static IObservable<int> Count<TObject>(this IObservable<IDistinctChangeSet<TObject>> source)
         {
             return source.ForAggregation().Count();
         }
-
     }
 }

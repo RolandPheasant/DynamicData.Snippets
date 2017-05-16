@@ -101,6 +101,8 @@
     <Compile Include="Sorting\SortFixture.cs" />
     <Compile Include="Switch\SwitchDataSource.cs" />
     <Compile Include="Switch\SwitchDataSourceFixture.cs" />
+    <Compile Include="Transform\FlattenNestedObservableCollection.cs" />
+    <Compile Include="Transform\TransformFixture.cs" />
     <Compile Include="ViewModelTesting\ViewModel.cs" />
     <Compile Include="ViewModelTesting\ViewModelFixture.cs" />
   </ItemGroup>
