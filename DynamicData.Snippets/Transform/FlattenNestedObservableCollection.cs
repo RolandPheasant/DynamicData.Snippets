@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using DynamicData.Binding;
-using DynamicData.Snippets.Infrastructure;
 
 
 namespace DynamicData.Snippets.Transform
@@ -20,7 +18,7 @@ namespace DynamicData.Snippets.Transform
              * after TransformMany() to reduce notifications (particularly on initial load) 
              */
             Children = source.Connect()
-                        .TransformMany(parent => parent.Children.ToObservableChangeSet(c=>c.Name))
+                        .TransformMany(parent => parent.Children, c=>c.Name)
                         .AsObservableCache();
         }
 

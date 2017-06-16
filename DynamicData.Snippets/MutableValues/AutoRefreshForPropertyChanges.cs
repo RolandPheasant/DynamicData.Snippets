@@ -20,7 +20,7 @@ namespace DynamicData.Snippets.MutableValues
              * and the data source sends a refresh signal to all downstream operators.
              */
             DistinctCount = dataSource.Connect()
-                .AutoRefresh(new[] {nameof(MutableThing.Value)}) //Omit param to refresh for any property
+                .AutoRefresh(t=>t.Value) //Omit param to refresh for any property
                 .DistinctValues(m => m.Value)
                 .Count();
         }
@@ -34,7 +34,7 @@ namespace DynamicData.Snippets.MutableValues
              */
 
             DistinctCount = dataSource
-                .AutoRefresh(new[] { nameof(MutableThing.Value) })
+                .AutoRefresh(t => t.Value)
                 .DistinctValues(m => m.Value)
                 .Count();
         }

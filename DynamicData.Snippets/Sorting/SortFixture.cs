@@ -3,7 +3,6 @@ using System;
 using System.Collections.Specialized;
 using System.Linq;
 using DynamicData.Snippets.Infrastructure;
-using DynamicData.Snippets.Switch;
 using FluentAssertions;
 using NUnit.Framework;
 

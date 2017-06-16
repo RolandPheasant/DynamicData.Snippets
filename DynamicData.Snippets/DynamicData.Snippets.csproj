@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DynamicData, Version=5.3.0.2156, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicData.5.3.0.2156\lib\net45\DynamicData.dll</HintPath>
+    <Reference Include="DynamicData, Version=5.4.0.2168, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicData.5.4.0.2168-beta\lib\net45\DynamicData.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.dll</HintPath>
