@@ -20,33 +20,27 @@ namespace DynamicData.Snippets.InspectItems
 
             var shared = source.Connect().Publish();
 
-            //fires an observable when any item within the source list has changed (no need to fire on initial)
-            var activeChanged = shared.WhenPropertyChanged(vm => vm.IsActive, false)
-                .ToUnit()
-                .StartWith(Unit.Default); //start with unit to ensure combine latest (below) yields when collection is loaded
-
-            //produce the entire collecton when the underlying observable list changes i.e. adds, removes and replaces
-            var collectionChanged = shared.ToCollection();
-
-            //combine latest collection and property change notifications
-            var statsAggregator = collectionChanged.CombineLatest(activeChanged, (items, _) =>
-            {
-                //produce a new result when the collection itself changes, or when IsActive changes
-                //(any result can be returned)
-                return new
+            //refresh entire collection when properties change
+            var statsAggregator = shared.AutoRefresh(vm => vm.IsActive)
+                .ToCollection()
+                .Select(items =>
                 {
-                    AllActive = items.All(i => i.IsActive),
-                    AllInActive = items.All(i => !i.IsActive),
-                    AnyActive = items.Any(i => i.IsActive),
-                    Count = items.Count,
-                };
-            }).Subscribe(x =>
-            {
-                AllActive = x.AllActive;
-                AllInActive = x.AllInActive;
-                AnyActive = x.AnyActive;
-                Count = x.Count;
-            });
+                    //produce a new result when the collection itself changes, or when IsActive changes
+                    //(any result can be returned)
+                    return new
+                    {
+                        AllActive = items.All(i => i.IsActive),
+                        AllInActive = items.All(i => !i.IsActive),
+                        AnyActive = items.Any(i => i.IsActive),
+                        Count = items.Count,
+                    };
+                }).Subscribe(x =>
+                {
+                    AllActive = x.AllActive;
+                    AllInActive = x.AllInActive;
+                    AnyActive = x.AnyActive;
+                    Count = x.Count;
+                });
 
             _cleanUp = new CompositeDisposable(statsAggregator, shared.Connect());
         }

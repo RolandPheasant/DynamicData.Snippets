@@ -49,7 +49,7 @@ namespace DynamicData.Snippets.Group
         }
     }
 
-    [DebuggerDisplay("{Ticker} ({Key.Type})  Value={Value}")]
+    [DebuggerDisplay("{Ticker} ({Key.Type})  Name={Value}")]
     public class TradeProxy
     {
         public AggregationKey Key { get; }

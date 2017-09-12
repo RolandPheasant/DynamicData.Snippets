@@ -87,6 +87,7 @@
     <Compile Include="Infrastructure\TestSchedulerProvider.cs" />
     <Compile Include="Infrastructure\ISchedulerProvider.cs" />
     <Compile Include="Infrastructure\DynamicDataEx.cs" />
+    <Compile Include="MutableValues\AutoRefreshChain.cs" />
     <Compile Include="MutableValues\AutoRefreshForPropertyChanges.cs" />
     <Compile Include="MutableValues\AutoRefreshFixture.cs" />
     <Compile Include="InspectItems\InspectCollection.cs" />
