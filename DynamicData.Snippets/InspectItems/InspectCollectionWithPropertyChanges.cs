@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData.Binding;
-using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.InspectItems
 {
@@ -18,10 +15,9 @@ namespace DynamicData.Snippets.InspectItems
                 Example to illustrate how to inspect an entire collection when properties change.
             */
 
-            var shared = source.Connect().Publish();
-
             //refresh entire collection when properties change
-            var statsAggregator = shared.AutoRefresh(vm => vm.IsActive)
+            _cleanUp = source.Connect()
+                .AutoRefresh(vm => vm.IsActive)
                 .ToCollection()
                 .Select(items =>
                 {
@@ -41,8 +37,6 @@ namespace DynamicData.Snippets.InspectItems
                     AnyActive = x.AnyActive;
                     Count = x.Count;
                 });
-
-            _cleanUp = new CompositeDisposable(statsAggregator, shared.Connect());
         }
         
         public bool AllActive { get; set; }

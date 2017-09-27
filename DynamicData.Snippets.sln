@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicData.Snippets", "DynamicData.Snippets\DynamicData.Snippets.csproj", "{E8204D00-1455-47D7-B866-7380ED3007D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicData.Snippets", "DynamicData.Snippets\DynamicData.Snippets.csproj", "{E8204D00-1455-47D7-B866-7380ED3007D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{98FA418F-A164-4FCE-8C9F-D36AA07653DE}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,5 +23,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49BD3A2A-961B-48A9-86EA-2904DBD50073}
 	EndGlobalSection
 EndGlobal

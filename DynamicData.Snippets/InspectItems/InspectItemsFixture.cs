@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace DynamicData.Snippets.InspectItems
 {
-    [TestFixture]
+    
     public class InspectItemsFixture
     {
-        [Test]
+        [Fact]
         public void InspectCollection()
         {
             var items = new[] {"A", "A", "B", "C"}
@@ -31,7 +31,7 @@ namespace DynamicData.Snippets.InspectItems
             }
         }
 
-        [Test]
+        [Fact]
         public void InspectCollectionWithPropertyChanges()
         {
             var initialItems = Enumerable.Range(1, 10)
@@ -68,7 +68,7 @@ namespace DynamicData.Snippets.InspectItems
             }
         }
 
-        [Test]
+        [Fact]
         public void InspectCollectionWithObservable()
         {
             var initialItems = Enumerable.Range(1, 10)
@@ -99,8 +99,9 @@ namespace DynamicData.Snippets.InspectItems
             }
         }
 
-        [TestCase(MonitorSelectedItemsMode.UsingEntireCollection)]
-        [TestCase(MonitorSelectedItemsMode.UsingFilterOnProperty)]
+        [Theory]
+        [InlineData(MonitorSelectedItemsMode.UsingEntireCollection)]
+        [InlineData(MonitorSelectedItemsMode.UsingFilterOnProperty)]
         public void MonitorSelectedItems(MonitorSelectedItemsMode mode)
         {
             var initialItems = Enumerable.Range(1, 10)

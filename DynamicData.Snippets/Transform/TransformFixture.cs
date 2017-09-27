@@ -1,13 +1,13 @@
 using System.Linq;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace DynamicData.Snippets.Transform
 {
-    [TestFixture]
+    
     public class TransformFixture
     {
-        [Test]
+        [Fact]
         public void FlattenObservableCollection()
         {
             var children = new[]

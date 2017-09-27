@@ -4,11 +4,11 @@ using System.Collections.Specialized;
 using System.Linq;
 using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace DynamicData.Snippets.Sorting
 {
-    [TestFixture]
+    
     public class SortFixture
     {
         private readonly Animal[] _items = new[]
@@ -26,7 +26,7 @@ namespace DynamicData.Snippets.Sorting
         };
 
 
-        [Test]
+        [Fact]
         public void CustomBinding()
         {
             // in this test we check whether the reset threshold can be dynamically controlled
@@ -56,10 +56,10 @@ namespace DynamicData.Snippets.Sorting
 
         }
 
-        [Test]
+        [Fact]
         public void ChangeComparer()
         {
-            const int size = 1000;
+            const int size = 100;
             var randomValues = Enumerable.Range(1, size).OrderBy(_ => Guid.NewGuid()).ToArray();
             var ascending = Enumerable.Range(1, size).ToArray();
             var descending = Enumerable.Range(1, size).OrderByDescending(_ => Guid.NewGuid()).ToArray();

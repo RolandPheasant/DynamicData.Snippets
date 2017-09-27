@@ -2,14 +2,14 @@
 using System.Linq;
 using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace DynamicData.Snippets.ViewModelTesting
 {
-    [TestFixture]
+    
     public class ViewModelFixture
     {
-        [Test]
+        [Fact]
         public void Binding()
         {
             var schedulerProvider = new TestSchedulerProvider();
@@ -33,7 +33,7 @@ namespace DynamicData.Snippets.ViewModelTesting
             }
         }
 
-        [Test]
+        [Fact]
         public void IsPaused()
         {
             var schedulerProvider = new TestSchedulerProvider();

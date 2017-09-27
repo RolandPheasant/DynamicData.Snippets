@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace DynamicData.Snippets.Group
 {
-    [TestFixture]
+    
     public class GroupFixture
     {
-        [Test]
+        [Fact]
         public void GroupAndMonitorPropertyChanges()
         {
             //create manual grouping so we can guage expectations
@@ -40,7 +40,7 @@ namespace DynamicData.Snippets.Group
             }
         }
 
-        [Test]
+        [Fact]
         public void XamarinFormsGrouping()
         {
             var items = new[]
@@ -85,7 +85,7 @@ namespace DynamicData.Snippets.Group
             }
         }
 
-        [Test]
+        [Fact]
         public void CustomTotalRows()
         {
             const string USD = "USD";

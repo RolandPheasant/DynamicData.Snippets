@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 
 namespace DynamicData.Snippets.Filter
 {
-    [TestFixture]
     public class FilterFixture
     {
         private readonly Animal[] _items = new[]
@@ -22,7 +21,7 @@ namespace DynamicData.Snippets.Filter
             new Animal("Sharon", "Red Backed Shrike", AnimalFamily.Bird),
         };
 
-        [Test]
+        [Fact]
         public void StaticFilter()
         {
             using (var sourceList = new SourceList<Animal>())
@@ -43,7 +42,7 @@ namespace DynamicData.Snippets.Filter
             }
         }
 
-        [Test]
+        [Fact]
         public void DynamicFilter()
         {
             var schedulerProvider = new TestSchedulerProvider();
@@ -73,10 +72,16 @@ namespace DynamicData.Snippets.Filter
                 //add a new bird to show it is included in the result set
                 sourceList.Add(new Animal("Peter", "Parrot", AnimalFamily.Bird));
                 sut.Filtered.Count.Should().Be(3);
+
+                //My additions...
+                sut.AnimalFilter = "Frog";
+                schedulerProvider.TestScheduler.Start();
+                sut.Filtered.Items.ShouldAllBeEquivalentTo(_items.Where(a => a.Type == "Frog"));
+                sut.Filtered.Count.Should().Be(1);
             }
         }
 
-        [Test]
+        [Fact]
         public void PropertyFilter()
         {
             var schedulerProvider = new TestSchedulerProvider();
@@ -102,7 +107,7 @@ namespace DynamicData.Snippets.Filter
             }
         }
         
-        [Test]
+        [Fact]
         public void ExternalSourceFilter()
         {
             using (var sourceList = new SourceList<Animal>())
