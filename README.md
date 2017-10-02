@@ -17,6 +17,7 @@ All these examples have working unit tests which allows for debugging and experi
 
 | Topic| Link| Description|
 | ------------- |-------------| -----|
+| Creation      |[ChangeSetCreation.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Creation/ChangeSetCreation.cs) | Create list and cache using first class observables |
 | Filtering      |[StaticFilter.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Filter/StaticFilter.cs) | Filter a data source using a static predicate |
 | |[DynamicFilter.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Filter/DynamicFilter.cs) | Create and apply an observable predicate |
 | |[ExternalSourceFilter.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Filter/ExternalSourceFilter.cs) | Create an observable predicate from another data source |
