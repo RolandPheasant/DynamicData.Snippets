@@ -58,6 +58,44 @@ namespace DynamicData.Snippets.Creation
         }
 
         [Fact]
+        public void LoadOnceWithRefcount()
+        {
+            int loadCount = 0;
+            Task<IEnumerable<int>> Loader()
+            {
+                loadCount++;
+                return Task.FromResult(Enumerable.Range(1, 10));
+            }
+
+            //Ref
+            var refcountSource = ChangeSetCreation.FromTaskWithRefCount(Loader);
+
+
+            using (var sut1 = refcountSource.AsObservableList())
+            using (var sut2 = refcountSource.AsObservableList())
+            {
+                sut1.Count.Should().Be(10);
+                sut2.Count.Should().Be(10);
+            }
+            loadCount.Should().Be(1);
+
+            using (var sut1 = refcountSource.AsObservableList())
+            using (var sut2 = refcountSource.AsObservableList())
+            using (var sut3 = refcountSource.AsObservableList())
+            using (var sut4 = refcountSource.AsObservableList())
+            using (var sut5 = refcountSource.AsObservableList())
+            {
+                sut1.Count.Should().Be(10);
+                sut2.Count.Should().Be(10);
+                sut3.Count.Should().Be(10);
+                sut4.Count.Should().Be(10);
+                sut5.Count.Should().Be(10);
+            }
+
+            loadCount.Should().Be(2);
+        }
+
+        [Fact]
         public void ReloadableWithEditDiff()
         {
             var reloader = new Subject<Unit>();

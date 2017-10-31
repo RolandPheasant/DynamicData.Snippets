@@ -74,6 +74,13 @@ namespace DynamicData.Snippets.Creation
             });
         }
 
+        public static IObservable<IChangeSet<int>> FromTaskWithRefCount(Func<Task<IEnumerable<int>>> loader)
+        {
+            //RefCount is a dd overload of the standard rx Publish().RefCount() operation
+            //Do not use Publish() as dd automatically takes care of that
+            return FromTask(loader).RefCount();
+        }
+
         /// <summary>
         /// Create an observable change set from 2 observables i) the initial load 2) a subscriber
         /// </summary>
