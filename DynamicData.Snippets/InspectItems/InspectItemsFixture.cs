@@ -126,7 +126,7 @@ namespace DynamicData.Snippets.InspectItems
 
                 //remove the selected items
                 sourceList.RemoveRange(0,2);
-                sut.HasSelection.Should().Be(false);
+                 sut.HasSelection.Should().Be(false);
                 sut.SelectedMessage.Should().Be("Nothing Selected");
             }
         }

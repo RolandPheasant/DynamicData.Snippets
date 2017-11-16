@@ -11,10 +11,12 @@ using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.InspectItems
 {
+
     public class MonitorSelectedItems : IDisposable
     {
         private readonly ISourceList<SelectableItem> _source;
         private readonly IDisposable _cleanUp;
+        public IObservableList<SelectableItem> _filtered;
 
         public bool HasSelection { get; set; }
         public string SelectedMessage { get; set; }
@@ -22,6 +24,11 @@ namespace DynamicData.Snippets.InspectItems
         public MonitorSelectedItems(ISourceList<SelectableItem> source, MonitorSelectedItemsMode mode)
         {
             _source = source;
+
+            _filtered = _source.Connect()
+                .FilterOnProperty(si => si.IsSelected, si => si.IsSelected)
+                .Do(x => { }, ex => { })
+                .AsObservableList();
 
             //both methods produce the same result. However, UsingEntireCollection() enables producing values of selected and not-selected items
             _cleanUp = mode == MonitorSelectedItemsMode.UsingFilterOnProperty
@@ -53,10 +60,13 @@ namespace DynamicData.Snippets.InspectItems
     
         private IDisposable UseFilterOnProperty()
         {
+
+
+
             var selectedItems = _source.Connect()
                 .FilterOnProperty(si => si.IsSelected, si => si.IsSelected)
-                .ToCollection() //TODO:RP Implement optional bool parameter to specify whether to start with an empty result 
-                .StartWith(new ReadOnlyCollection<SelectableItem>(new List<SelectableItem>()))
+                .ToCollection() 
+                .StartWithEmpty()
                 .Publish();
 
             return new CompositeDisposable
@@ -100,6 +110,24 @@ namespace DynamicData.Snippets.InspectItems
         {
             get => _isSelected;
             set => SetAndRaise(ref _isSelected, value);
+        }
+
+        protected bool Equals(SelectableItem other)
+        {
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((SelectableItem) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
         }
     }
 }

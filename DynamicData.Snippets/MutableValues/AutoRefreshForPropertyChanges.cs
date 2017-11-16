@@ -29,8 +29,7 @@ namespace DynamicData.Snippets.MutableValues
         {
             /* 
              * As per above example but in cases where the observable cache is not available 
-             * 
-             *  NB: I created a new operator (See DynamicDataEx.cs in infrastructure folder which will be added to dynamic data in the next release)
+
              */
 
             DistinctCount = dataSource
