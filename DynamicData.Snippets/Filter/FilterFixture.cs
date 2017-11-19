@@ -7,7 +7,7 @@ namespace DynamicData.Snippets.Filter
 {
     public class FilterFixture
     {
-        private readonly Animal[] _items = new[]
+        private readonly Animal[] _items =
         {
             new Animal("Holly", "Cat", AnimalFamily.Mammal),
             new Animal("Rover", "Dog", AnimalFamily.Mammal),

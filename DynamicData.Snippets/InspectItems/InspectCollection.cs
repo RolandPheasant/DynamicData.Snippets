@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reactive.Linq;
-using DynamicData.Snippets.Infrastructure;
 
 namespace DynamicData.Snippets.InspectItems
 {

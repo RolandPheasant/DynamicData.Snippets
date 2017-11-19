@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using DynamicData.Snippets.Infrastructure;
 using FluentAssertions;
 using Xunit;
 
