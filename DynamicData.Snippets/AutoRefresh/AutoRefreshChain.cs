@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DynamicData.Binding;
+﻿using DynamicData.Binding;
 
-namespace DynamicData.Snippets.MutableValues
+namespace DynamicData.Snippets.AutoRefresh
 {
     public class AutoRefreshChain
     {

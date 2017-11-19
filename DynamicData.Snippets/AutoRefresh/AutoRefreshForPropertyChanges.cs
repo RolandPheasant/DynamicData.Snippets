@@ -2,7 +2,7 @@
 using DynamicData.Binding;
 using DynamicData.Snippets.Infrastructure;
 
-namespace DynamicData.Snippets.MutableValues
+namespace DynamicData.Snippets.AutoRefresh
 {
     public class AutoRefreshForPropertyChanges
     {

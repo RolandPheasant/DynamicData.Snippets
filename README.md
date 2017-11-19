@@ -17,6 +17,7 @@ All these examples have working unit tests which allows for debugging and experi
 
 | Topic| Link| Description|
 | ------------- |-------------| -----|
+| AutoRefresh   |[AutoRefreshForPropertyChanges.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/AutoRefresh/AutoRefreshForPropertyChanges.cs) | How to force cache operators to recalulate when using mutable objects|
 | Aggregation      |[Aggregations.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Aggregation/Aggregations.cs) | Dynamically aggregrate items in a data source |
 | Creation      |[ChangeSetCreation.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Creation/ChangeSetCreation.cs) | Create list and cache using first class observables |
 | Filtering      |[StaticFilter.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Filter/StaticFilter.cs) | Filter a data source using a static predicate |
@@ -30,7 +31,6 @@ All these examples have working unit tests which allows for debugging and experi
 | |[InspectCollectionWithPropertyChanges.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/InspectItems/InspectCollectionWithPropertyChanges.cs) | Produce an observable based on the contents of the data source, which also fires when a specified property changes |
 | |[InspectCollectionWithObservable.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/InspectItems/InspectCollectionWithObservable.cs) | Produce an observable based on the contents of the data source, whose values are supplied by an observable on each item in the collection|
 | |[MonitorSelectedItems.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/InspectItems/MonitorSelectedItems.cs) | Monitor a collection of items which have an IsSelected property and produce observables based on selection|
-| Mutable Values|[AutoRefreshForPropertyChanges.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/MutableValues/AutoRefreshForPropertyChanges.cs) | How to force cache operators to recalulate when using mutable objects|
 | Sorting|[ChangeComparer.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Sorting/ChangeComparer.cs) | How to dynamically sort a collection using an observable comparer|
 | |[CustomBinding.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Sorting/CustomBinding.cs) | Customise binding behaviour for a sorted data source|
 | Switch |[SwitchDataSource.cs](https://github.com/RolandPheasant/DynamicData.Snippets/blob/master/DynamicData.Snippets/Switch/SwitchDataSource.cs) | Toggle between different data sources|

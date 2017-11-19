@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -8,15 +6,12 @@ using System.Reactive.Linq;
 using DynamicData.Binding;
 using DynamicData.Snippets.Infrastructure;
 
-
 namespace DynamicData.Snippets.InspectItems
 {
-
     public class MonitorSelectedItems : IDisposable
     {
         private readonly ISourceList<SelectableItem> _source;
         private readonly IDisposable _cleanUp;
-        public IObservableList<SelectableItem> _filtered;
 
         public bool HasSelection { get; set; }
         public string SelectedMessage { get; set; }
@@ -24,12 +19,7 @@ namespace DynamicData.Snippets.InspectItems
         public MonitorSelectedItems(ISourceList<SelectableItem> source, MonitorSelectedItemsMode mode)
         {
             _source = source;
-
-            _filtered = _source.Connect()
-                .FilterOnProperty(si => si.IsSelected, si => si.IsSelected)
-                .Do(x => { }, ex => { })
-                .AsObservableList();
-
+            
             //both methods produce the same result. However, UsingEntireCollection() enables producing values of selected and not-selected items
             _cleanUp = mode == MonitorSelectedItemsMode.UsingFilterOnProperty
                 ? UseFilterOnProperty()
@@ -60,11 +50,9 @@ namespace DynamicData.Snippets.InspectItems
     
         private IDisposable UseFilterOnProperty()
         {
-
-
-
             var selectedItems = _source.Connect()
-                .FilterOnProperty(si => si.IsSelected, si => si.IsSelected)
+                .AutoRefresh(si => si.IsSelected)
+                .Filter(si => si.IsSelected)
                 .ToCollection() 
                 .StartWithEmpty()
                 .Publish();

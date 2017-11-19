@@ -3,22 +3,14 @@ using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
-namespace DynamicData.Snippets.MutableValues
+namespace DynamicData.Snippets.AutoRefresh
 {
-    
     public class AutoRefreshFixture
     {
-        public enum ForceEvaluationMode
-        {
-            Cache,
-            Observable
-        }
-
-
         [Theory]
         [InlineData(ForceEvaluationMode.Cache)]
         [InlineData(ForceEvaluationMode.Observable)]
-        public void AutoRefresh(ForceEvaluationMode mode)
+        public void AutoRefreshTest(ForceEvaluationMode mode)
         {
             var items = new List<MutableThing>
             {
@@ -58,4 +50,11 @@ namespace DynamicData.Snippets.MutableValues
             }
         }
     }
+
+    public enum ForceEvaluationMode
+    {
+        Cache,
+        Observable
+    }
+
 }
