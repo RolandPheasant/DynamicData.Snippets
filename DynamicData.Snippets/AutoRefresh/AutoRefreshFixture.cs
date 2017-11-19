@@ -7,10 +7,8 @@ namespace DynamicData.Snippets.AutoRefresh
 {
     public class AutoRefreshFixture
     {
-        [Theory]
-        [InlineData(ForceEvaluationMode.Cache)]
-        [InlineData(ForceEvaluationMode.Observable)]
-        public void AutoRefreshTest(ForceEvaluationMode mode)
+        [Fact]
+        public void AutoRefresh()
         {
             var items = new List<MutableThing>
             {
@@ -25,9 +23,7 @@ namespace DynamicData.Snippets.AutoRefresh
             //result should only be true when all items are set to true
             using (var cache = new SourceCache<MutableThing, int>(m => m.Id))
             {
-                var sut = mode == ForceEvaluationMode.Cache
-                    ? new AutoRefreshForPropertyChanges(cache)
-                    : new AutoRefreshForPropertyChanges(cache.Connect());
+                var sut = new AutoRefreshForPropertyChanges(cache);
 
                 int count = 0;
                 sut.DistinctCount.Subscribe(result => count = result);
@@ -50,11 +46,4 @@ namespace DynamicData.Snippets.AutoRefresh
             }
         }
     }
-
-    public enum ForceEvaluationMode
-    {
-        Cache,
-        Observable
-    }
-
 }

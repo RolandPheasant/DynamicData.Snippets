@@ -9,7 +9,7 @@ namespace DynamicData.Snippets.AutoRefresh
 
         public IObservable<int> DistinctCount { get; }
 
-        public AutoRefreshForPropertyChanges(ISourceCache<MutableThing, int> dataSource)
+        public AutoRefreshForPropertyChanges(IObservableCache<MutableThing, int> dataSource)
         {
             /*
              * The observable cache has no concept of mutable properties. It only knows about adds, updates and removes.
@@ -21,19 +21,6 @@ namespace DynamicData.Snippets.AutoRefresh
              */
             DistinctCount = dataSource.Connect()
                 .AutoRefresh(t=>t.Value) //Omit param to refresh for any property
-                .DistinctValues(m => m.Value)
-                .Count();
-        }
-
-        public AutoRefreshForPropertyChanges(IObservable<IChangeSet<MutableThing, int>> dataSource)
-        {
-            /* 
-             * As per above example but in cases where the observable cache is not available 
-
-             */
-
-            DistinctCount = dataSource
-                .AutoRefresh(t => t.Value)
                 .DistinctValues(m => m.Value)
                 .Count();
         }
