@@ -58,7 +58,7 @@ namespace DynamicData.Snippets.Paging
 
                 // Requested first 4 items from page 2 the underlying data -> expect a changeset of 4
                 pager.OnNext(new PageRequest(2, 4));
-                sut.Paged.Count.Should().Be(6);
+                sut.Paged.Count.Should().Be(4);
 
             }
         }
