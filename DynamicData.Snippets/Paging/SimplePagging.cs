@@ -11,12 +11,11 @@ namespace DynamicData.Snippets.Paging
 
         public IObservableList<Animal> Paged { get; }
 
-        public IObservable<IPageRequest> PageRequests { get; set; } = Observable.Return(new PageRequest(0, 0));
-
-        public SimplePagging(IObservableList<Animal> source)
+        public SimplePagging(IObservableList<Animal> source, IObservable<IPageRequest> pager)
         {
             Paged = source.Connect()
-                .Page(PageRequests)
+                .Page(pager)
+                .Do(changes => Console.WriteLine(changes.TotalChanges), ex => Console.WriteLine(ex)) //added as a quick and dirty way to debug
                 .AsObservableList();
 
             _cleanUp = Paged;
