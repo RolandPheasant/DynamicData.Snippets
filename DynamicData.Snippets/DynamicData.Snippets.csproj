@@ -20,5 +20,9 @@
 
   <ItemGroup>
     <Folder Include="Paging\" />
+    <Folder Include="Virtualise\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Virtualise\PagingListWithVistualise.config" />
   </ItemGroup>
 </Project>
