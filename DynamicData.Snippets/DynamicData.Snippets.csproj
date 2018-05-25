@@ -3,9 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
- 
+
+  <PropertyGroup>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="DynamicData" Version="6.1.4.2381" />
+    <PackageReference Include="DynamicData" Version="6.2.0.2388" />
   </ItemGroup>
 
 
@@ -18,11 +22,4 @@
     <PackageReference Include="Microsoft.Reactive.Testing" Version="[3.1.1,4)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Paging\" />
-    <Folder Include="Virtualise\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Virtualise\PagingListWithVistualise.config" />
-  </ItemGroup>
 </Project>
