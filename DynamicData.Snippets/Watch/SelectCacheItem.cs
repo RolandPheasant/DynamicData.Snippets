@@ -24,8 +24,13 @@ namespace DynamicData.Snippets.Watch
             /*
              * Example to show how to select an item after after it has been added to a cache and subsequently transformed.
              *
-             * If a filter is applied before the transform this methodology will not work. In that case, an alternative would be
-             * to add .Do(changes => some custom logic) after the bind statement
+             * If a filter is applied before the transform this methodology will not work. In that case, alternatives would be
+             * to:
+             *
+             * 1. Add .Do(changes => some custom logic) after the bind statement
+             * 2  Add .OnItemAdded(i => SelectedItem = i) after the bind statement
+             *
+             * In both these options there is no need to split the source cache into a separate transformed cache
              */
 
             _schedulerProvider = schedulerProvider;
@@ -60,8 +65,9 @@ namespace DynamicData.Snippets.Watch
 
         private void SelectWhenLoaded(string id)
         {
+            //put the code onto the main thread so it happens after binding
             _autoSelector.Disposable = _transformedCache.Watch(id)
-                .ObserveOn(_schedulerProvider.MainThread) //put the code onto the main thread so it happens after binding
+                .ObserveOn(_schedulerProvider.MainThread) 
                 .Subscribe(change => SelectedItem = change.Current);
 
         }
