@@ -82,24 +82,24 @@ namespace DynamicData.Snippets.Transform
                 source.AddOrUpdate(parents);
 
                 sut.Count.Should().Be(5);
-                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Take(5)));
+                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Take(5).Select(c => new ProjectedNestedChild(p, c))));
 
                 //add a child to the observable collection
                 parents[2].Children.Add(children[5]);
 
                 sut.Count.Should().Be(6);
-                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children));
+                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Select(c => new ProjectedNestedChild(p, c))));
 
                 //remove a parent and check children have moved
                 source.RemoveKey(1);
                 sut.Count.Should().Be(4);
-                sut.Items.ShouldBeEquivalentTo(parents.Skip(1).SelectMany(p => p.Children));
+                sut.Items.ShouldBeEquivalentTo(parents.Skip(1).SelectMany(p => p.Children.Select(c => new ProjectedNestedChild(p, c))));
 
                 //add a parent and check items have been added back in
                 source.AddOrUpdate(parents[0]);
 
                 sut.Count.Should().Be(6);
-                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children));
+                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Select(c => new ProjectedNestedChild(p, c))));
             }
         }
 
