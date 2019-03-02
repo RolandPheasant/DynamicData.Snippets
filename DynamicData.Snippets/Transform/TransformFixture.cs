@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using DynamicData.Binding;
 using FluentAssertions;
@@ -56,7 +57,7 @@ namespace DynamicData.Snippets.Transform
         }
 
         [Fact]
-        public void FlattenObservableCollectionWithProjection()
+        public void FlattenObservableCollectionWithProjectionFromObservableCache()
         {
             var children = new[]
             {
@@ -105,6 +106,56 @@ namespace DynamicData.Snippets.Transform
             }
         }
 
+        [Fact]
+        public void FlattenObservableCollectionWithProjectionFromObservableList()
+        {
+            var children = new[]
+            {
+                new NestedChild("A", "ValueA"),
+                new NestedChild("B", "ValueB"),
+                new NestedChild("C", "ValueC"),
+                new NestedChild("D", "ValueD"),
+                new NestedChild("E", "ValueE"),
+                new NestedChild("F", "ValueF")
+            };
+
+            var parents = new[]
+            {
+                new ClassWithNestedObservableCollection(1, new[] { children[0], children[1] }),
+                new ClassWithNestedObservableCollection(2, new[] { children[2], children[3] }),
+                new ClassWithNestedObservableCollection(3, new[] { children[4] })
+            };
+
+            using (var source = new SourceList<ClassWithNestedObservableCollection>())
+            using (var sut = source.Connect()
+                        .AutoRefreshOnObservable(self => self.Children.ToObservableChangeSet())
+                        .TransformMany(parent => parent.Children.Select(c => new ProjectedNestedChild(parent, c)), new ProjectNestedChildEqualityComparer())
+                        .AsObservableList())
+            {
+                source.AddRange(parents);
+
+                sut.Count.Should().Be(5);
+                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Take(5).Select(c => new ProjectedNestedChild(p, c))));
+
+                //add a child to the observable collection
+                parents[2].Children.Add(children[5]);
+
+                sut.Count.Should().Be(6);
+                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Select(c => new ProjectedNestedChild(p, c))));
+
+                //remove a parent and check children have moved
+                source.Remove(parents[0]);
+                sut.Count.Should().Be(4);
+                sut.Items.ShouldBeEquivalentTo(parents.Skip(1).SelectMany(p => p.Children.Select(c => new ProjectedNestedChild(p, c))));
+
+                //add a parent and check items have been added back in
+                source.Add(parents[0]);
+
+                sut.Count.Should().Be(6);
+                sut.Items.ShouldBeEquivalentTo(parents.SelectMany(p => p.Children.Select(c => new ProjectedNestedChild(p, c))));
+            }
+        }
+
         private class ProjectedNestedChild
         {
             public ClassWithNestedObservableCollection Parent { get; }
@@ -115,6 +166,22 @@ namespace DynamicData.Snippets.Transform
             {
                 Parent = parent;
                 Child = child;
+            }
+        }
+
+        private class ProjectNestedChildEqualityComparer : IEqualityComparer<ProjectedNestedChild>
+        {
+            public bool Equals(ProjectedNestedChild x, ProjectedNestedChild y)
+            {
+                if (x == null || y == null)
+                    return false;
+
+                return x.Child.Name == y.Child.Name;
+            }
+
+            public int GetHashCode(ProjectedNestedChild obj)
+            {
+                return obj.Child.Name.GetHashCode();
             }
         }
     }
