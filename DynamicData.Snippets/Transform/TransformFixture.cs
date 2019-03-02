@@ -1,4 +1,5 @@
 using System.Linq;
+using DynamicData.Binding;
 using FluentAssertions;
 using Xunit;
 
@@ -76,6 +77,7 @@ namespace DynamicData.Snippets.Transform
 
             using (var source = new SourceCache<ClassWithNestedObservableCollection, int>(x => x.Id))
             using (var sut = source.Connect()
+                        .AutoRefreshOnObservable(self => self.Children.ToObservableChangeSet())
                         .TransformMany(parent => parent.Children.Select(c => new ProjectedNestedChild(parent, c)), c => c.Child.Name)
                         .AsObservableCache())
             {
